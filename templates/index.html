@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">PlantIQ</div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Detect Plant Diseases with AI</h1>
+            <p>Upload a photo of your plant and let our AI model identify potential diseases with precision.</p>
+
+            <!-- Form to upload an image -->
+            <form action="/predict" method="POST" enctype="multipart/form-data">
+                <input aria-label="Upload image" type="file" name="file" accept="image/*" required>
+                <button type="submit">Upload and Analyze</button>
+            </form>
+
+            <!-- Display uploaded image -->
+            {% if uploaded_image %}
+            <div class="uploaded-image">
+                <h3>Uploaded Image:</h3>
+                <img src="{{ url_for('static', filename=uploaded_image) }}" alt="Uploaded Image"
+                    style="max-width: 100%; height: auto;">
+            </div>
+            {% endif %}
+
+            <!-- Display prediction results -->
+            {% if prediction %}
+            <div class="message success">
+                <h3>Prediction Result:</h3>
+                <p><strong>Confidence:</strong> {{ predicted_percentage }}%</p>
+                <h3>Disease Probabilities:</h3>
+                <ul>
+                    {% for class_name, prob in prediction.items() %}
+                    <li>{{ class_name }}: {{ prob }}%</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </section>
+
+        <section id="about" class="about">
+            <h2>About PlantIQ</h2>
+            <p>PlantIQ is an AI-powered tool that helps farmers, gardeners, and plant enthusiasts quickly identify
+                diseases in plants. Using advanced machine learning algorithms, we provide accurate diagnoses and help
+                users take preventive actions to protect their crops.</p>
+        </section>
+
+        <section id="developer" class="developer">
+            <h2>Meet Our Developer</h2>
+            <p>Hi, I'm <strong>Amritesh</strong>, a 2nd-year graduate student at <strong>Manipal University</strong>.
+                This project is part of the <strong>Object-Oriented Programming (OOPs)</strong> course in Python. I am
+                passionate about technology and creating impactful solutions through innovative applications like
+                PlantIQ.</p>
+        </section>
+    </main>
+
+    <footer>
+        <section id="contact" class="contact">
+            <h2>Contact Us</h2>
+            <p>Have questions or feedback? Reach out to us!</p>
+            <p>Email: <a href="mailto:support@plantiq.com">support@plantiq.com</a></p>
+        </section>
+        <p>&copy; 2024 PlantIQ. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
